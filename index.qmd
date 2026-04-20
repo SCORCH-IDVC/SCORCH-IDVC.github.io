@@ -1,0 +1,223 @@
+---
+title: " "
+---
+
+```{r setup}
+#| include: false
+
+projects <- list(
+
+  list(
+    title = "The Geography of Cooling",
+    image = "images/evap-cooling.jpg",
+    brief = "Household-level spatial dataset of evaporative cooler adoption in a US city. Five studies examining cooling equity, urban heat exposure, monsoon vulnerability, climate adaptation, and health outcomes in Tucson.",
+    pdf = "",
+    website = "https://scorch-idvc.github.io/evap-cooling/"
+  ),
+
+  list(
+    title = "Project Title 2",
+    image = "images/placeholder.jpg",
+    brief = "Brief description of the project. What question does it answer? What data does it use? Who benefits from the results?",
+    pdf = "files/project2.pdf",
+    website = ""
+  )
+)
+
+members <- list(
+
+  list(
+    name = "Name 1",
+    position = "XX",
+    role = "IDVC Director",
+    description = "Bio.",
+    website = "",
+    email = "member1@arizona.edu"
+  ),
+
+  list(
+    name = "Member Name 2",
+    position = "XX",
+    role = "Data Visualization",
+    description = "Bio.",
+    website = "",
+    email = "member2@arizona.edu"
+  ),
+
+  list(
+    name = "Member 3",
+    position = "XX",
+    role = "Data Management",
+    description = "Bio.",
+    website = "",
+    email = "member3@arizona.edu"
+  )
+
+)
+```
+
+::: {.hero}
+[SCORCH | Integrated Data Visualization Core]{.acronym}
+
+# Data for *resilient* communities
+
+We support climate and health research in arid lands in the southwest of the USA through data science, visualization, and training. Our work helps researchers, communities, and decision-makers understand and respond to the health impacts of a warming climate.
+:::
+
+
+<!-- ============================================================ -->
+<!-- ABOUT -->
+<!-- ============================================================ -->
+
+::: {.section-header}
+::: {.section-bar}
+:::
+## About IDVC
+:::
+
+::: {.about-section}
+The Southwest Center on Resilience for Climate Change and Health (SCORCH) brings together transdisciplinary research groups to conduct solutions-oriented team-science projects responsive to the health needs of arid lands communities adapting to climate change. The Integrated Data Visualization Core (IDVC) supports the overall Center mission through the provision of data science, visualization, and management expertise.
+:::
+
+::: {.services}
+::: {.service-box}
+::: {.service-num}
+1
+:::
+#### Data management
+Sharing, analyses, and stewardship congruent with scientific data management best practices.
+:::
+::: {.service-box}
+::: {.service-num}
+2
+:::
+#### Visualization
+Interactive tools and figures that make integrated health and climate data accessible to researchers and communities.
+:::
+::: {.service-box}
+::: {.service-num}
+3
+:::
+#### Training
+Workshops and resources to develop and enhance capacity to manage and visualize integrated health and climate data.
+:::
+:::
+
+
+<!-- ============================================================ -->
+<!-- PROJECTS -->
+<!-- ============================================================ -->
+
+::: {.section-header #projects}
+::: {.section-bar}
+:::
+## Projects
+What we are working on.
+:::
+
+```{r projects}
+#| output: asis
+#| echo: false
+
+cat('<div class="cards-grid">\n')
+
+for (proj in projects) {
+  cat('<div class="project-card">\n')
+
+  ## Image
+  if (nzchar(proj$image) && file.exists(proj$image)) {
+    cat(sprintf('  <img src="%s" alt="%s">\n', proj$image, proj$title))
+  } else {
+    ## Placeholder gradient if no image
+    cat(sprintf('  <div style="width:100%%;height:180px;background:#e4f0e7;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-size:1.2rem;color:#8a7d6b;">%s</div>\n',
+                substr(proj$title, 1, 30)))
+  }
+
+  cat('  <div class="card-body">\n')
+  cat(sprintf('    <h3>%s</h3>\n', proj$title))
+  cat(sprintf('    <p>%s</p>\n', proj$brief))
+
+  ## Links
+  cat('    <div class="card-links">\n')
+  if (nzchar(proj$pdf)) {
+    cat(sprintf('      <a href="%s" class="link-pdf" target="_blank">PDF</a>\n', proj$pdf))
+  }
+  if (nzchar(proj$website)) {
+    cat(sprintf('      <a href="%s" class="link-web" target="_blank">Website</a>\n', proj$website))
+  }
+  cat('    </div>\n')
+
+  cat('  </div>\n')
+  cat('</div>\n')
+}
+
+cat('</div>\n')
+```
+
+
+<!-- ============================================================ -->
+<!-- TEAM -->
+<!-- ============================================================ -->
+
+::: {.section-header #team}
+::: {.section-bar}
+:::
+## Team
+The people behind the work.
+:::
+
+```{r members}
+#| output: asis
+#| echo: false
+
+cat('<div class="cards-grid">\n')
+
+for (m in members) {
+  ## Initials for avatar
+  initials <- paste(
+    sapply(strsplit(m$name, " ")[[1]], function(w) substr(w, 1, 1)),
+    collapse = "")
+
+  cat('<div class="member-card">\n')
+  cat(sprintf('  <div class="avatar">%s</div>\n', initials))
+  cat(sprintf('  <h3>%s</h3>\n', m$name))
+  cat(sprintf('  <div class="position">%s</div>\n', m$position))
+  cat(sprintf('  <div class="role">%s</div>\n', m$role))
+  cat(sprintf('  <p>%s</p>\n', m$description))
+
+  cat('  <div class="member-links">\n')
+  if (nzchar(m$website)) {
+    cat(sprintf('    <a href="%s" target="_blank">Website</a>\n', m$website))
+  }
+  if (nzchar(m$email)) {
+    cat(sprintf('    <a href="mailto:%s">Email</a>\n', m$email))
+  }
+  cat('  </div>\n')
+
+  cat('</div>\n')
+}
+
+cat('</div>\n')
+```
+
+
+<!-- ============================================================ -->
+<!-- CONTACT -->
+<!-- ============================================================ -->
+
+::: {.section-header #contact}
+::: {.section-bar}
+:::
+:::
+
+::: {.contact-section}
+## Get in touch
+
+The IDVC is part of the Southwest Center on Resilience for Climate Change and Health (SCORCH) at the University of Arizona. We enhance institutional capacity to conduct climate change and health research tailored to the needs of arid lands communities.
+
+[XX@arizona.edu](mailto:XX@arizona.edu)
+:::
+
+::: {.site-footer}
+SCORCH | Integrated Data Visualization Core | University of Arizona
+:::

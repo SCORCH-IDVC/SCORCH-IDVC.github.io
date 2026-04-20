@@ -1,0 +1,25 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "IDVC"
+  navbar:
+    background: "#ffffff"
+    foreground: "#2c2418"
+    left:
+      - text: "Home"
+        href: index.qmd
+    right:
+      - text: "Projects"
+        href: "#projects"
+      - text: "Team"
+        href: "#team"
+      - text: "Contact"
+        href: "#contact"
+
+format:
+  html:
+    theme: cosmo
+    css: style.css
+    toc: false
