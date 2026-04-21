@@ -1,5 +1,33 @@
 ---
 title: " "
+website:
+  title: "IDVC"
+  favicon: /images/android-chrome-512x512.ico
+  navbar:
+    logo: /images/scorch-mezcoph-logo.png
+    logo-alt: "IDVC Logo"
+    background: "#ffffff"
+    foreground: "#2c2418"
+    left:
+      - text: "Home"
+        href: index.qmd
+    right:
+      - text: "Projects"
+        href: "#projects"
+      - text: "Team"
+        href: "#team"
+      - text: "Contact"
+        href: "#contact"
+
+format:
+  html:
+    theme: cosmo
+    css: style.css
+    toc: false
+    pagetitle: "IDVC | Integrated Data Visualization Core"
+    include-in-header:
+      text: |
+        <link rel="icon" type="image/png" href="images/ua_rev_block_rgb_4.png">
 ---
 
 ```{r setup}
@@ -10,9 +38,9 @@ projects <- list(
   list(
     title = "The Geography of Cooling",
     image = "images/evap-cooling.jpg",
-    brief = "Household-level spatial dataset of evaporative cooler adoption in a US city. Five studies examining cooling equity, urban heat exposure, monsoon vulnerability, climate adaptation, and health outcomes in Tucson.",
+    brief = "Household-level spatial dataset of evaporative cooler adoption in a US city. Study examining cooling equity, urban heat exposure, monsoon vulnerability, climate adaptation, and health outcomes in Tucson.",
     pdf = "",
-    website = "https://scorch-idvc.github.io/evap-cooling/"
+    website = "https://scorch-idvc.github.io/evapcooling/"
   ),
 
   list(
@@ -57,6 +85,8 @@ members <- list(
 ```
 
 ::: {.hero}
+![](images/scorch-mezcoph-logo.png){width="300px" style="margin-bottom: 1rem;"}
+
 [SCORCH | Integrated Data Visualization Core]{.acronym}
 
 # Data for *resilient* communities
@@ -116,42 +146,24 @@ What we are working on.
 :::
 
 ```{r projects}
-#| output: asis
 #| echo: false
-
-cat('<div class="cards-grid">\n')
-
-for (proj in projects) {
-  cat('<div class="project-card">\n')
-
-  ## Image
-  if (nzchar(proj$image) && file.exists(proj$image)) {
-    cat(sprintf('  <img src="%s" alt="%s">\n', proj$image, proj$title))
-  } else {
-    ## Placeholder gradient if no image
-    cat(sprintf('  <div style="width:100%%;height:180px;background:#e4f0e7;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-size:1.2rem;color:#8a7d6b;">%s</div>\n',
-                substr(proj$title, 1, 30)))
-  }
-
-  cat('  <div class="card-body">\n')
-  cat(sprintf('    <h3>%s</h3>\n', proj$title))
-  cat(sprintf('    <p>%s</p>\n', proj$brief))
-
-  ## Links
-  cat('    <div class="card-links">\n')
-  if (nzchar(proj$pdf)) {
-    cat(sprintf('      <a href="%s" class="link-pdf" target="_blank">PDF</a>\n', proj$pdf))
-  }
-  if (nzchar(proj$website)) {
-    cat(sprintf('      <a href="%s" class="link-web" target="_blank">Website</a>\n', proj$website))
-  }
-  cat('    </div>\n')
-
-  cat('  </div>\n')
-  cat('</div>\n')
-}
-
-cat('</div>\n')
+htmltools::HTML(paste0(
+  '<div class="cards-grid">',
+  paste(sapply(projects, function(proj) {
+    img <- if (nzchar(proj$image) && file.exists(proj$image)) {
+      sprintf('<img src="%s" alt="%s">', proj$image, proj$title)
+    } else {
+      sprintf('<div style="width:100%%;height:180px;background:#e4f0e7;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-size:1.2rem;color:#8a7d6b;">%s</div>',
+              substr(proj$title, 1, 30))
+    }
+    links <- paste0(
+      if (nzchar(proj$pdf)) sprintf('<a href="%s" class="link-pdf" target="_blank">PDF</a>', proj$pdf) else "",
+      if (nzchar(proj$website)) sprintf('<a href="%s" class="link-web" target="_blank">Website</a>', proj$website) else "")
+    sprintf('<div class="project-card">%s<div class="card-body"><h3>%s</h3><p>%s</p><div class="card-links">%s</div></div></div>',
+            img, proj$title, proj$brief, links)
+  }), collapse = ""),
+  '</div>'
+))
 ```
 
 
@@ -167,37 +179,19 @@ The people behind the work.
 :::
 
 ```{r members}
-#| output: asis
 #| echo: false
-
-cat('<div class="cards-grid">\n')
-
-for (m in members) {
-  ## Initials for avatar
-  initials <- paste(
-    sapply(strsplit(m$name, " ")[[1]], function(w) substr(w, 1, 1)),
-    collapse = "")
-
-  cat('<div class="member-card">\n')
-  cat(sprintf('  <div class="avatar">%s</div>\n', initials))
-  cat(sprintf('  <h3>%s</h3>\n', m$name))
-  cat(sprintf('  <div class="position">%s</div>\n', m$position))
-  cat(sprintf('  <div class="role">%s</div>\n', m$role))
-  cat(sprintf('  <p>%s</p>\n', m$description))
-
-  cat('  <div class="member-links">\n')
-  if (nzchar(m$website)) {
-    cat(sprintf('    <a href="%s" target="_blank">Website</a>\n', m$website))
-  }
-  if (nzchar(m$email)) {
-    cat(sprintf('    <a href="mailto:%s">Email</a>\n', m$email))
-  }
-  cat('  </div>\n')
-
-  cat('</div>\n')
-}
-
-cat('</div>\n')
+htmltools::HTML(paste0(
+  '<div class="cards-grid">',
+  paste(sapply(members, function(m) {
+    initials <- paste(sapply(strsplit(m$name, " ")[[1]], function(w) substr(w, 1, 1)), collapse = "")
+    links <- paste0(
+      if (nzchar(m$website)) sprintf('<a href="%s" target="_blank">Website</a>', m$website) else "",
+      if (nzchar(m$email)) sprintf('<a href="mailto:%s">Email</a>', m$email) else "")
+    sprintf('<div class="member-card"><div class="avatar">%s</div><h3>%s</h3><div class="position">%s</div><div class="role">%s</div><p>%s</p><div class="member-links">%s</div></div>',
+            initials, m$name, m$position, m$role, m$description, links)
+  }), collapse = ""),
+  '</div>'
+))
 ```
 
 
